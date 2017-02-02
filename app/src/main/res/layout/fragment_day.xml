@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingLeft="10dp"
+
+    android:paddingRight="10dp"
+    android:paddingTop="5dp">
+
+
+
+
+
+            <TextView
+                android:id="@+id/recycler_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bubble_counter_bkg"
+                android:padding="4dp"
+                android:text="Timetable empty..."
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/white"
+                android:textIsSelectable="false"
+                android:textStyle="normal|bold"
+                android:visibility="gone" />
+
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_viewClass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbarThumbVertical="@drawable/recycler_scrollbar_color"
+        android:scrollbars="vertical" />
+</LinearLayout>

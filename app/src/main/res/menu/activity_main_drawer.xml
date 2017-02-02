@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item
+
+            app:actionViewClass="android.widget.TextView"
+            android:id="@+id/nav_notications"
+            android:icon="@drawable/ic_message_white_24dp"
+            android:title="Notifications" />
+        <item
+
+            app:actionViewClass="android.widget.TextView"
+            android:id="@+id/nav_notes"
+            android:icon="@drawable/ic_note_white_24dp"
+            android:title="Notes" />
+    </group>
+
+    <item android:title="Action" >
+        <menu>
+
+            <item
+                android:title="Get Timetable"
+                android:id="@+id/nav_install"
+                android:icon="@drawable/ic_cloud_download_white_24dp"
+                />
+            <item
+                android:title="Get Exam-TimeTable"
+                android:id="@+id/nav_exam"
+                android:icon="@drawable/ic_class_black_24dp"
+                />
+            <item
+                android:visible="false"
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share App" />
+            <item
+                android:icon="@drawable/ic_info_outline_black_24dp"
+                android:id="@+id/nav_about"
+                android:title="About"
+                />
+
+        </menu>
+    </item>
+
+</menu>

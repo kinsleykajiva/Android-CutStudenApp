@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/itemlayout"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+
+        >
+
+        <LinearLayout
+            android:id="@+id/sample_item_index_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <LinearLayout
+                    android:background="@drawable/border_wo_padding"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/sample_item_index_text_view11"
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+
+                        android:gravity="center"
+                        android:text="08.00"
+                        android:textColor="@android:color/black"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/sample_item_index_text_view1"
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="10.00"
+                        android:textColor="@android:color/black"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentTop="false"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_toEndOf="@+id/sample_item_index_text_view"
+            android:layout_toRightOf="@+id/sample_item_index_text_view"
+            android:minHeight="60dp"
+            android:orientation="vertical"
+            android:paddingLeft="5dp">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minHeight="60dp"
+                app:contentPadding="9dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="5dp">
+
+
+                    <LinearLayout
+                        android:id="@+id/rowDetailsLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/sample_item_name_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="This is a Low cost rent"
+                            android:lines="1"
+                            android:ellipsize="end"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lines="1"
+                            android:ellipsize="end"
+                            android:text="Small TextSolitudo festus capio est.Sunt mensaes promissio velox, clemens paluses.Historia festus particula est.Fortis uria virtualiter amors tabes est."
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textSize="12sp" />
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:id="@+id/alamset_state"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:layout_weight="1"
+                                android:text="Reminder Set"
+                                android:textColor="@color/almostDone"
+                                android:textSize="11sp"
+                                android:textStyle="italic"
+                                android:visibility="invisible" />
+
+                            <TextView
+                                android:id="@+id/classstate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:gravity="right"
+                                android:paddingRight="10dp"
+                                android:text="lecture "
+                                android:textColor="@color/onGoin"
+                                android:textSize="11sp"
+                                android:textStyle="italic" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_alignRight="@+id/rowDetailsLayout"
+
+                        android:src="@drawable/ic_dots" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

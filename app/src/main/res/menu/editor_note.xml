@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu  xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Save"
+        android:id="@+id/action_save"
+        android:orderInCategory="101"
+        android:icon="@drawable/ic_save_white_24dp"
+        app:showAsAction="always"
+
+        />
+    <item android:title="Delete"
+        app:showAsAction="always"
+        android:id="@+id/action_Delete"
+        android:orderInCategory="101"
+        android:icon="@drawable/ic_delete_white_24dp"
+
+        />
+
+</menu>

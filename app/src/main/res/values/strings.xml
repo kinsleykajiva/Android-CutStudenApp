@@ -1,0 +1,110 @@
+<resources>
+    <string name="app_name">C.U.T Student</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+<string name="appversion">1.0</string>
+
+    <string name="developer">Kinsley Kajiva</string>
+    <!---->
+    <string-array name="classtime_arrays">
+        <item>07:00 - 09:00</item>
+        <item>09:15 - 11:15</item>
+        <item>11:30 - 13:30</item>
+        <item>13:45 - 15:45</item>
+        <item>16:00 - 18:00</item>
+        <item>18:15 - 20:15</item>
+    </string-array>
+
+
+    <string-array name="ClassVenue">
+        <item>Great Hall</item>
+        <item>Computer lab 1</item>
+        <item>Computer lab 2</item>
+        <item>Unix lab</item>
+
+    </string-array>
+    <!---->
+    <string name="next">NEXT</string>
+    <string name="skip">PREV</string>
+    <string name="start">Done.</string>
+    <string name="slide_1_title">Hello</string>
+    <string name="slide_1_desc">Welcome To Chinhoyi University Student App.</string>
+
+    <string name="slide_2_title">App SetUP</string>
+    <string name="slide_2_desc">Customise the app according to your Undergraduate Programme.\nClick Next.</string>
+
+    <string name="slide_3_title"></string>
+    <string name="slide_3_desc">After SetUp Click Next</string>
+
+    <string name="slide_4_title">All Done.</string>
+    <string name="slide_4_desc">Please Enjoy Using Our Student App.</string>
+    <string name="title_activity_welcome_setup">WelcomeSetup</string>
+    <string name="ok">OK</string>
+    <string name="install">Install</string>
+    <string name="customactivityoncrash_error_activity_error_occurred_explanation">An unexpected error occurred.\nSorry for the inconvenience.</string>
+    <string name="AboutApp">
+        C.U.T Student App is a Chinhoyi University Student Android Application developed to help students keep track of their studies.\n\n
+        The Student App is basically a Timetable app that comes with features like setting adding or creating a Lecture and  Tutorials,making Lecture or Tutorial Reminders(Alarms).
+        \n\n
+        The application also comes with the message receiving ability.\n\n
+        Please do note that data loaded from server or internet can change at any time this include your TimeTable,Exam-Timetable.
+        \n\n\n\n\n\n\n\n\n\n\n
+        Developed by Kinsley  Kajiva &#8211;(ICT Student).
+    </string>
+    <string name="new_version">Please download a new version to enjoy newer features. </string>
+    <string name="version_warning">Please your advised that this version will soon be Obsolete.Consider upgrading.</string>
+<string name="library_licence">
+        Please do note we the developers of Chinhoyi University Student App do by every right acknowledge Apache License of every library we have used in our App! \n\n
+
+    Below is a list of all used library:\n\n
+    • Square Up - okhttp 3\n
+    • Bumptech  - glide \n
+    • Realm.io - realm.io.java \n
+    • Fabric.io - crashlytics\n
+    • Google  - android.support Libraries,Firebase\n
+    • Jon Finerty - Once\n
+    • Douglas Nassif Roma Junior - simple-tooltip\n
+    • Keepsafe Software Inc - taptargetview\n
+    • flipkart-incubator - circular-image\n\n\n
+
+        Copyright 2016 All Third Party Library\n
+
+        Licensed under the Apache License, Version 2.0 (the "License");\n
+        you may not use this file except in compliance with the License.\n
+        You may obtain a copy of the License at\n\n
+
+           http://www.apache.org/licenses/LICENSE-2.0\n\n
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+    \n\n\n
+    </string>
+    <string name="known_Bugs">
+    Here is a list of all known possible bugs that users may feel or see as they use the application.\n\n
+    These bugs may not be causing any run-time exceptions but they still need correcting.\n\n
+    • When renaming the tabs to from the settings sections it may occure that when a user taps
+    the renaming option twice in a activity session the renaming code may wipe out the tab titles hence the tabs
+    and their content.\n\n
+    • This one is for the developer who may want to update the realm data base , do note that when ever you update the data base or library
+    version some methods may be rendered old or deprecated so go through the CRUD class found DBAccess package, so this could affect the
+    performance of the whole application.\n\n
+    • Also in updating the code do consider redoing the CRUD class found in DBAccess package to pass the Realm object to the
+    the methods in need or in question as i may think that write operations at the moment may be slow than reading operations.\n\n
+    • When switching from Class TimeTable to Examinations TimeTable as you would have noticed that the whole applications closes
+    and it resets all of the variables this has various advantages.I do hope there will another way of switching and that resets
+    several app runtime conditions. As you would switch from these TimeTables one of the two has to be rendered invalid to use
+    whilst using the other one.\n\n
+    • As of API 25 and below there is no known way of removing app shortcut at the users home screen(Please Note: this is subject to the
+    users Theme that they have at the moment of using the app).So at the moment if users clear the app cache that also cleares the app
+    timetable please do know all prefference or temporary database will be wiped out so ,another short-cut will be  created it may annoy
+    the user so by any means in new API (25 + ) do take care of this.\n
+    \n\n
+    • Thus All.
+    </string>
+</resources>

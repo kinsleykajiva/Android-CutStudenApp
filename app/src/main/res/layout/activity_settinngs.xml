@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_settinngs"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:scrollbarStyle="outsideInset"
+    android:scrollbarThumbVertical="@drawable/recycler_scrollbar_color"
+    tools:context="kinsleykajiva.co.zw.cutstudentapp.Settinngs">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:text="Clear All Saved : "
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal|bold" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/clear_classtimetable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="Class Timetable"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="normal|bold"
+                android:theme="@style/MySwitch" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/clear_examtimetable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="Exam Timetable"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="normal|bold"
+                android:theme="@style/MySwitch" />
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.12"
+                android:background="@android:color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Revert to last known timetable for :"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal|bold" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/revert_classtimetable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="Class Timetable"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="normal|bold"
+                android:theme="@style/MySwitch" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/revert_examtimetable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="Exam Timetable"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="normal|bold"
+                android:theme="@style/MySwitch" />
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.12"
+                android:background="@android:color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:text=" Remove Tab :"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:drawableLeft="@drawable/ic_remove_circle_black_24dp"
+                android:drawablePadding="8sp"
+                android:drawableStart="@drawable/ic_remove_circle_black_24dp"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="Saturday"
+                android:id="@+id/removeSaturday"
+                android:textStyle="normal|bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="55dp"
+                android:layout_marginRight="55dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.09"
+                android:background="@android:color/black"
+                android:id="@+id/view" />
+
+            <TextView
+
+                android:drawableLeft="@drawable/ic_remove_circle_black_24dp"
+                android:drawablePadding="8sp"
+                android:drawableStart="@drawable/ic_remove_circle_black_24dp"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="Sunday"
+                android:id="@+id/removeSunday"
+                android:textStyle="normal|bold" />
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.12"
+                android:background="@android:color/black" />
+        </LinearLayout>
+
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+
+            >
+
+            <CheckBox
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal|bold"
+                android:padding="5dp"
+                android:id="@+id/full_tab_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Use short Tab name"
+
+                android:button="@null"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:alpha="0.12"
+            android:background="@android:color/black"
+             />
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+
+            >
+
+            <CheckBox
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal|bold"
+                android:padding="5dp"
+                android:id="@+id/app_shortcuts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Create App Shortcut"
+
+                android:button="@null"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:alpha="0.12"
+            android:background="@android:color/black"
+            />
+        <LinearLayout
+            android:id="@+id/opensorce"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:text=" Open-source Liecenses"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="Licence details for open-source software"
+                android:textStyle="normal|bold" />
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.12"
+                android:background="@android:color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/appversion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:text="App version"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"
+                android:text="@string/appversion"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"
+                android:text=" © 2017"
+                android:textStyle="normal" />
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.12"
+                android:background="@android:color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:text="C.U.T Student App Source code :"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal|bold" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"
+                android:text="github.com/kinsleykajiva/cutstudentapp"
+                android:textStyle="normal" />
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.12"
+                android:background="@android:color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linear_bugs"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:text="Known Bugs :"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal|bold" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"
+                android:text="Tap to View Log (For programmers only)"
+                android:textStyle="normal" />
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.12"
+                android:background="@android:color/black" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</ScrollView>

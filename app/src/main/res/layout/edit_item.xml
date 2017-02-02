@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <Spinner
+        android:id="@+id/spinnerClassDay"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:background="@drawable/custom_spinner_background"
+        android:spinnerMode="dropdown" />
+    <Spinner
+        android:id="@+id/spinnerClassType"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:background="@drawable/custom_spinner_background"
+        android:spinnerMode="dropdown" />
+    <LinearLayout
+        android:id="@+id/selectTimes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <Spinner
+
+            android:id="@+id/spinnerClassTime"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:background="@drawable/custom_spinner_background"
+            android:spinnerMode="dropdown" />
+
+        <EditText
+            android:layout_marginLeft= "18dp"
+            android:paddingLeft="10dp"
+            android:layout_marginRight="18dp"
+            android:hint="Set time ..."
+            android:id="@+id/tutorialTimePicker1"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:ems="10"
+            android:background="@drawable/custom_spinner_background"
+            android:inputType="date" />
+        </LinearLayout>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="15"
+                app:counterTextAppearance="@style/counterText"
+                app:counterOverflowTextAppearance="@style/counterOverride">
+
+                <EditText
+                    android:inputType="textCapSentences"
+                    android:id="@+id/className_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:maxLength="17"
+                    android:hint="Class Name"
+                    />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="20"
+                app:counterTextAppearance="@style/counterText"
+                app:counterOverflowTextAppearance="@style/counterOverride">
+
+                <AutoCompleteTextView
+                    android:id="@+id/classVenue_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:hint="Venue"
+                    android:inputType="textCapSentences"
+                    android:maxLength="25"
+                    android:imeOptions="actionDone"
+                     />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
+</ScrollView>
