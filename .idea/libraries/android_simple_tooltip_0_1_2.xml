@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="android-simple-tooltip-0.1.2">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.douglasjunior/android-simple-tooltip/0.1.2/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.douglasjunior/android-simple-tooltip/0.1.2/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.douglasjunior/android-simple-tooltip/0.1.2/9d48d1f6560d0c25a6ac62d61ffc124b453e722a/android-simple-tooltip-0.1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

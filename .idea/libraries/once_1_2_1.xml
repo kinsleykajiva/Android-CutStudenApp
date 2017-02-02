@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="once-1.2.1">
+    <ANNOTATIONS>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.jonathanfinerty.once/once/1.2.1/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.jonathanfinerty.once/once/1.2.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.jonathanfinerty.once/once/1.2.1/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jonathanfinerty.once/once/1.2.1/e6ef6b2069d3132f21748578f931ecb289be6b5/once-1.2.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

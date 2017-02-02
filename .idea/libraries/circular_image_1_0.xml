@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="circular-image-1.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.flipkart-incubator/circular-image/1.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.flipkart-incubator/circular-image/1.0/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.flipkart-incubator/circular-image/1.0/3b197606d44c75395321cd4b9d543d059b1e6ce1/circular-image-1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

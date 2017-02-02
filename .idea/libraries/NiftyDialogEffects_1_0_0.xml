@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="NiftyDialogEffects-1.0.0">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.sd6352051/NiftyDialogEffects/1.0.0/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.sd6352051/NiftyDialogEffects/1.0.0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.sd6352051/NiftyDialogEffects/1.0.0/edf54228cea80fa9d09c04ad7dc1c7b63d12ac78/NiftyDialogEffects-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
