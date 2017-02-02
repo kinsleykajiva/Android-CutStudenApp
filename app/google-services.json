@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "397146776449",
-    "firebase_url": "https://wagwanzw.firebaseio.com",
-    "project_id": "wagwanzw",
-    "storage_bucket": "wagwanzw.appspot.com"
+    "project_number": "196612594335",
+    "firebase_url": "https://cutstudentapp.firebaseio.com",
+    "project_id": "cutstudentapp",
+    "storage_bucket": "cutstudentapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:397146776449:android:6dedf97b9f9cf78b",
+        "mobilesdk_app_id": "1:196612594335:android:3ed96e8a48a484db",
         "android_client_info": {
           "package_name": "kinsleykajiva.co.zw.cutstudentapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "397146776449-5ks567fre8uobc1u5q6ltj3lgbmji937.apps.googleusercontent.com",
+          "client_id": "196612594335-kfpvagdsu0i8sl0oijmiskoqhtiquic9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD13rsQPyot5kfRSZb0jDGH1BKfLyLcp7Y"
+          "current_key": "AIzaSyAHfQEEPNJjphLAT0kgKzsHocmJl2Ulgkk"
         }
       ],
       "services": {
