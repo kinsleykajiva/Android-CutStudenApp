@@ -5,7 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-<string name="appversion">1.0</string>
+    <string name="appversion">1.0</string>
 
     <string name="developer">Kinsley Kajiva</string>
     <!---->
@@ -106,5 +106,11 @@
     the user so by any means in new API (25 + ) do take care of this.\n
     \n\n
     • Thus All.
+    </string>
+    <string name="study_tip_credit_1">
+        https://www.reading.ac.uk
+    </string>
+     <string name="study_tip_credit_2">
+       http://slc.berkeley.edu \n http://centuracollege.edu
     </string>
 </resources>

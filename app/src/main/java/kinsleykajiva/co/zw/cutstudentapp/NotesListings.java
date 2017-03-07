@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import Adapters.ClassLectureRecycler;
 import Adapters.NotesRecycler;
+import BuildsConfigs.BuildsData;
 import DBAccess.RealmDB.NotesDB;
 import Messages.NifftyDialogs;
 import io.realm.Realm;

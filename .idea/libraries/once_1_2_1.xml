@@ -4,8 +4,8 @@
       <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.jonathanfinerty.once/once/1.2.1/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.jonathanfinerty.once/once/1.2.1/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.jonathanfinerty.once/once/1.2.1/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/ef9ae7ac72294cc03ba400e91f3bd65518596989/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/ef9ae7ac72294cc03ba400e91f3bd65518596989/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

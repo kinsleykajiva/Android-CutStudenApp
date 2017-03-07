@@ -21,12 +21,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,10 +47,12 @@ import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import BuildsConfigs.BuildsData;
 import DBAccess.Preffs.mSettings;
+import DBAccess.RealmDB.NotesDB;
 import InterfaceCallBacks.Interface_OnloadExamTimeTable;
 import InterfaceCallBacks.OnUpdateFound_Interface;
 import Messages.NifftyDialogs;
@@ -57,6 +61,9 @@ import Netwox.NetGetAppUpdate;
 import Netwox.NetGetExamTimeTable;
 import fragments.fragmentDay;
 import fragments.fragmentExam;
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 import jonathanfinerty.once.Amount;
 import jonathanfinerty.once.Once;
 import widgets.CustomSpinnerAdapter;
@@ -88,17 +95,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Context context = MainActivity.this;
     private final String installation = "installation";
     private TextView userprogram;
+    private TextView CountBadges_nav_notes;
     private ProgressDialog dialog;
     private int indicator = 0;
     private Menu mMenu;
     private int HowmanyTime_Tabs_Added = 0;
     private boolean wasSat_Day_there = false;
     final String virginity_Check = "virgin_home";
-
+    private Realm realm;
+    private RealmResults<NotesDB> results;
+    private RealmChangeListener realmListener= element -> {
+// results
+        CountBadges_nav_notes.setText(results.size()>0?"("+results.size()+")":"");
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         runHomeKeeping();
         setContentView(R.layout.activity_main);
         initViews();
@@ -107,12 +121,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private void runInit_tour() {
         if (Once.beenDone(Once.THIS_APP_INSTALL, installation)) {
-
             if (!Once.beenDone(Once.THIS_APP_INSTALL, virginity_Check) && !HasUsedManuall) {
                 Once.markDone(virginity_Check);
-
                 final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(context);
-
                 dialogBuilder.withTitle("Welcome ...")
                         .withDialogColor(BuildsData.getColor(context, R.color.colorPrimary))
                         .withMessage("Welcome to C.U.T Student App")
@@ -120,11 +131,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .withIcon(R.drawable.ic_info_white_24dp).withDuration(700)
                         .setButton1Click(v -> {
                             dialogBuilder.dismiss();
-
                             initshowWalkThrough_Manual();
                         })
                         .show();
-
             }
         }
     }
@@ -133,72 +142,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
-        /*if (Once.beenDone(Once.THIS_APP_INSTALL, "installation") && !HasUsedManuall ) {
-            Realm check = Realm.getDefaultInstance();
-            if ((check.where(ClassesLecture.class).findAll()).isEmpty() ) {
-                final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(context);
-
-                dialogBuilder.withTitle("Timetable Empty !")
-                        .withTitleColor("#FFFFFF")
-                        .withDividerColor("#727272")
-                        .withMessage("Please Install/Create Timetable")
-                        .withMessageColor("#FFFFFFFF")
-                        .withDialogColor("#FFE74C3C")
-                        .withButton1Text("Ok")
-                        .isCancelableOnTouchOutside(false)
-                        .withEffect(new NifftyDialogs(context).stylepop_up())
-                        .withDuration(700)
-                        .setButton1Click(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                initshowWalkThrough_Manual();
-                                dialogBuilder.dismiss();
-                            }
-                        })
-                        .show();
-            }
-
-            check.close();
-        }else{
-            new NifftyDialogs(context).messageOkError("Timetable Empty !", "Please Install/Create Timetable");
-        }*/
-       /* Realm check = Realm.getDefaultInstance();
-        if ((check.where(ClassesLecture.class).findAll()).isEmpty()&& !HasUsedManuall) {
-            new NifftyDialogs(context).messageOkError("Timetable Empty !", "Please Install/Create Timetable");
-        }
-        check.close();*/
-        if (HasUsedManuall) { // this is ok
+        realm.addChangeListener(realmListener);
+        if (HasUsedManuall) {
             initshowWalkThrough_Manual();
-            /*TapTargetView.showFor(this, TapTarget.forView(fab, "Add Class/Tutorial", "Click to create or add new class/tutorial depending on day ")
-                            .cancelable(false)
-                            .dimColor(android.R.color.black)
-                            .outerCircleColor(R.color.colorPrimaryDark)
-                            .targetCircleColor(android.R.color.black)
-                            .transparentTarget(true)
-                            .drawShadow(true)
-                            .textColor(android.R.color.white)
-                    , new TapTargetView.Listener() {
-                        @Override
-                        public void onTargetClick(TapTargetView view) {
-                            super.onTargetClick(view);
-
-                            drawer.closeDrawer(GravityCompat.START);
-                        }
-                    }
-            );*/
         }
         RunUpdateCheck(context);
-
-
-      /*  CreateWriteBackTxt(context,APP_BACKUP_CLASSES_TXT,"this is really working");
-       String wasonfile =ReadBackedUpTxt(context,APP_BACKUP_CLASSES_TXT);
-        new NifftyDialogs(context).messageOkError("Timetable Empty !", wasonfile);*/
-
     }
-
+/**
+ *
+ * <p>
+ *  This will check if there is a newer app comparing the app versions and even the version name found in gradle.
+ * </p>
+ * <p>
+ *     At the moment this method will trigger the app up-date function if and only if the app has been used 5 time or more before the last update.
+ *     A background class or thread in class  NetGetAppUpdate is started in the background that is off the main thread
+ * </p>
+ * <p>
+ *     The class implementing the OnUpdateFound_Interface interface will call this methhod from the background method onPostexecute ()
+ * </p>
+ * @see NetGetAppUpdate
+ * @see OnUpdateFound_Interface
+ * @params Context
+ * **/
     private void RunUpdateCheck(Context context) {
-
-
         if (Once.beenDone(BuildsData.COUNT_APP_USED, Amount.exactly(5)) || Once.beenDone(BuildsData.COUNT_APP_USED, Amount.moreThan(5))) {
             Toast.makeText(context, "Checking Cut App Update", Toast.LENGTH_LONG).show();
             new NetGetAppUpdate(this).execute();
@@ -208,6 +174,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    /**
+     * <p>
+     *     will work once doing the showcase
+     * </p>*/
     private void initshowWalkThrough_Manual() {
 
         /*if (toolbar.isOverflowMenuShowing()) {
@@ -301,9 +271,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         );
     }
 
-
-
     private void runHomeKeeping() {
+        realm=Realm.getDefaultInstance();
+        results = realm.where(NotesDB.class).findAll();
         app = (MyApplication) getApplication();
         dialog = new ProgressDialog(context);
         isExamTime = Once.beenDone(Once.THIS_APP_INSTALL, EXAM_TIME_KEY);
@@ -355,12 +325,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onExamLoaded(String response) {
         ShowPorgressDialog(false);
         if (response.isEmpty()) {
-            new NifftyDialogs(context).messageOkError("Connection Error !!", "Check your Internet Connection");
+            // new NifftyDialogs(context).messageOkError("Connection Error !!", "Check your Internet Connection");
+            app.setExamMark();
+
+            final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(context);
+            dialogBuilder.withTitle("Information")
+                    .withMessage("Manually Load Exam-Timetable.")
+                    .withButton1Text("Ok-Load").isCancelableOnTouchOutside(false).withEffect(new NifftyDialogs(context).stylepop_up())
+                    .withIcon(R.drawable.ic_info_white_24dp).withDuration(700)
+                    .setButton1Click(v -> {
+                            doRestart(context);
+                        dialogBuilder.dismiss();
+                    })
+                    .show();
         } else {
             app.setExamMark();
 
             final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(context);
-
             dialogBuilder.withTitle("Information")
                     .withDialogColor(Build.VERSION.SDK_INT > 21 ? ContextCompat.getColor(context, R.color.colorPrimary) : context.getResources().getColor(R.color.colorPrimary))
                     .withMessage("Your Exam-Timetable is ready.")
@@ -370,13 +351,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         if (!ExamLoadedFromFragment) {
                             doRestart(context);
                         }
-
                         dialogBuilder.dismiss();
-
                     })
                     .show();
-
-
         }
 
     }
@@ -641,6 +618,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userprogram = (TextView) headerLayout.findViewById(R.id.textView);
         userprogram.setText(new mSettings(context).getUSER_PROGRAME());
 
+        CountBadges_nav_notes = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.nav_notes));
+        CountBadges_nav_notes.setGravity(Gravity.CENTER_VERTICAL);
+
+        CountBadges_nav_notes.setText(results.size()>0?"("+results.size()+")":"");
+
     }
 
     @Override
@@ -703,8 +685,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 exit = true;
                 new Handler().postDelayed(() -> exit = false, 3 * 1000);
             }
-            //The Handler here handles accidental back presses, it simply shows a Toast,
-            // and if there is another back press within 3 seconds, it closes the application
         }
     }
 
@@ -725,6 +705,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        realm.removeChangeListener(realmListener);
+        realm.close();
     }
 
     @Override
@@ -771,7 +753,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void addTab() {
-        wasSat_Day_there = !settings.getTAB_SATURDAY().isEmpty() ? false : true;
+        wasSat_Day_there = settings.getTAB_SATURDAY().isEmpty();
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View content = inflater.inflate(R.layout.weekends, null);
         final String[] weekend = settings.getTAB_SATURDAY().isEmpty() && settings.getTAB_SUNDAY().isEmpty() ?
@@ -782,9 +764,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 );// new String[]{""};//settings.getTAB_SATURDAY().isEmpty()?{BuildsData.WEEKEND_DAYS[0]}:BuildsData.WEEKEND_DAYS[0];
         final Spinner spinnerClassDay = (Spinner) content.findViewById(R.id.spinnerClassDay);
         ArrayList<String> temp1 = new ArrayList<>();
-        for (String v : weekend) {
-            temp1.add(v);
-        }
+        Collections.addAll(temp1, weekend);
         final String[] weeke_endDay = {""};
         final CustomSpinnerAdapter dataAdapter2 = new CustomSpinnerAdapter(this, temp1);
         spinnerClassDay.setAdapter(dataAdapter2);
@@ -807,9 +787,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     boolean shortHand=settings.isTAB_ABBRIVIATED();
 
                     if(shortHand && weeke_endDay[0].equalsIgnoreCase("Saturday")){
-                        adapter.addFrag(new fragmentDay(), "Sat");
+                        adapter.addFrag(new fragmentDay(),TIMES_DAYS_SHORT[5] );
                     }else  if(shortHand && weeke_endDay[0].equalsIgnoreCase("Sunday")){
-                        adapter.addFrag(new fragmentDay(), "Sun");
+                        adapter.addFrag(new fragmentDay(),TIMES_DAYS_SHORT[6]);
                     }else{
                         adapter.addFrag(new fragmentDay(), weeke_endDay[0]);
                     }
@@ -864,8 +844,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_about) {
             startActivity(new Intent(this, About.class));
         } else if (id == R.id.nav_exam) {
-            SetExamTimeTable();
+          //  SetExamTimeTable();
+            app.setExamMark();
+            doRestart(context);
 
+        }else if(id==R.id.nav_study_tips){
+            startActivity(new Intent(this, StudyTips.class));
         }
         if (id == R.id.nav_notes) {
             startActivity(new Intent(this, NotesListings.class));

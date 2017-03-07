@@ -295,7 +295,7 @@ public class CRUD {
             for (ExaminationDB gt : temp2) {
                 if (gt.getName().contentEquals(tm.getName()) && gt.getdDate().contentEquals(tm.getdDate())) {
 
-                    pojoArray.add(new ExaminationDB(gt.getExamDay(), gt.getStartTime(), gt.getEndTime(), gt.getVenue(), gt.getName(), gt.getdDate(), gt.getID() * 0/*is dummy*/, gt.isDone()/*is dummy*/, gt.isRemindSet()/*is dummy*/, gt.getWeek()));
+                    pojoArray.add(new ExaminationDB(gt.getExamDay(), gt.getStartTime(), gt.getEndTime(), gt.getVenue(), gt.getName(), gt.getdDate(), 0/*is dummy*/, gt.isDone()/*is dummy*/, gt.isRemindSet()/*is dummy*/, gt.getWeek()));
                     break;
                 }
             }

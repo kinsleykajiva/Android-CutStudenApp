@@ -40,12 +40,7 @@ public class NifftyDialogs {
                 .withMessage(message)
                 .withButton1Text("Ok").isCancelableOnTouchOutside(false).withEffect(stylepop_up())
                 .withIcon(R.drawable.ic_info_white_24dp).withDuration(700)
-                .setButton1Click(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialogBuilder.dismiss();
-                    }
-                })
+                .setButton1Click(v -> dialogBuilder.dismiss())
                 .show();
     }
     public void  messageOkError(String Title,String message){
@@ -61,12 +56,7 @@ public class NifftyDialogs {
                 .isCancelableOnTouchOutside(false)
                 .withEffect(stylepop_up())
                 .withDuration(700)
-                .setButton1Click(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialogBuilder.dismiss();
-                    }
-                })
+                .setButton1Click(v -> dialogBuilder.dismiss())
                 .show();
     }
     public void  messageOk(String message){
@@ -77,82 +67,11 @@ public class NifftyDialogs {
                 .withMessage(message)
                 .withButton1Text("Ok").isCancelableOnTouchOutside(false).withEffect(stylepop_up())
                 .withIcon(R.drawable.ic_info_white_24dp).withDuration(700)
-                .setButton1Click(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialogBuilder.dismiss();
-
-                    }
-                })
+                .setButton1Click(v -> dialogBuilder.dismiss())
                 .show();
     }
-    public void messageOkCancel(String Title,String message){
-        final NiftyDialogBuilder dialogBuilder=NiftyDialogBuilder.getInstance(context);
-        final boolean[] value = new boolean[1];
-        dialogBuilder
-                .withTitle(Title)
-                .withTitleColor("#FFFFFF")
-                .withDividerColor("#727272")
-                .withIcon(R.drawable.ic_info_white_24dp)
-                .withMessage(message)
-                .withMessageColor("#FFFFFFFF")
-                .withDialogColor("#FFE74C3C")
-                .isCancelableOnTouchOutside(false)
-                .withDuration(700)
-                .withEffect(stylepop_up())
-                .withButton1Text("OK")
-                .withButton2Text("Cancel")
-                .isCancelableOnTouchOutside(true)
-
-                .setButton1Click(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
 
-                        dialogBuilder.dismiss();
-                    }
-                })
-                .setButton2Click(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        dialogBuilder.dismiss();
-                    }
-                })
-                .show();
-
-    }
-    public boolean messageOkBool(String Title,String message){
-        final NiftyDialogBuilder dialogBuilder=NiftyDialogBuilder.getInstance(context);
-        final boolean[] value = new boolean[1];
-        dialogBuilder
-                .withTitle(Title)
-                .withTitleColor("#FFFFFF")
-                .withDividerColor("#727272")
-                .withIcon(R.drawable.ic_info_white_24dp)
-                .withMessage(message)
-                .withMessageColor("#FFFFFFFF")
-                .withDialogColor("#FFE74C3C")
-                .isCancelableOnTouchOutside(false)
-                .withDuration(700)
-                .withEffect(stylepop_up())
-                .withButton1Text("OK")
-
-                .isCancelableOnTouchOutside(true)
-
-                .setButton1Click(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        value[0] =false;
-
-                        dialogBuilder.dismiss();
-                    }
-                })
-
-                .show();
-        return value[0];
-    }
     public Effectstype stylepop_up(){
 
 

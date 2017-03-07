@@ -213,98 +213,68 @@ private static String week="";
         classVenue_edit.setText(rw.getVenue());
         realm.close();
 
-        timpicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                new TimePickerFragment().show(fragmentManager, "timePicker");
-            }
+        timpicker.setOnClickListener(view -> new TimePickerFragment().show(fragmentManager, "timePicker"));
+        datePicker.setOnClickListener(view -> new DatePickerFragment().show(fragmentManager, "datePicker"));
+        timpicker.setOnTouchListener((v, event) -> {
+            int inType = timpicker.getInputType(); // backup the input type
+            timpicker.setInputType(InputType.TYPE_NULL); // disable soft input
+            timpicker.onTouchEvent(event); // call native handler
+            timpicker.setInputType(inType); // restore input type
+            return true; // consume touch even
         });
-        datePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                new DatePickerFragment().show(fragmentManager, "datePicker");
-            }
-        });
-        timpicker.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int inType = timpicker.getInputType(); // backup the input type
-                timpicker.setInputType(InputType.TYPE_NULL); // disable soft input
-                timpicker.onTouchEvent(event); // call native handler
-                timpicker.setInputType(inType); // restore input type
-                return true; // consume touch even
-            }
-        });
-        datePicker.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int inType = timpicker.getInputType(); // backup the input type
-                datePicker.setInputType(InputType.TYPE_NULL); // disable soft input
-                datePicker.onTouchEvent(event); // call native handler
-                datePicker.setInputType(inType); // restore input type
-                return true; // consume touch even
-            }
+        datePicker.setOnTouchListener((v, event) -> {
+            int inType = timpicker.getInputType(); // backup the input type
+            datePicker.setInputType(InputType.TYPE_NULL); // disable soft input
+            datePicker.onTouchEvent(event); // call native handler
+            datePicker.setInputType(inType); // restore input type
+            return true; // consume touch even
         });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setView(content)
                 .setTitle("Edit Exam.")
                 .setCancelable(false)
-                .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (!datePicker.getText().toString().trim().isEmpty() && !timpicker.getText().toString().trim().isEmpty() && !className_edit.getText().toString().trim().isEmpty() && !classVenue_edit.getText().toString().trim().isEmpty()) {
-                            UpdateExam(
-                                    rowIdTOEdit,
+                .setPositiveButton("Edit", (dialog, which) -> {
+                    if (!datePicker.getText().toString().trim().isEmpty() && !timpicker.getText().toString().trim().isEmpty() && !className_edit.getText().toString().trim().isEmpty() && !classVenue_edit.getText().toString().trim().isEmpty()) {
+                        UpdateExam(
+                                rowIdTOEdit,
 
-                                    Time_Select_start[0],
-                                    Time_Select_end[0],
-                                    classVenue_edit.getText().toString().trim(),
-                                    className_edit.getText().toString().trim(),
-                                    examDate,
-                                    week,
-                                    DAY_SELECT
-                            );
+                                Time_Select_start[0],
+                                Time_Select_end[0],
+                                classVenue_edit.getText().toString().trim(),
+                                className_edit.getText().toString().trim(),
+                                examDate,
+                                week,
+                                DAY_SELECT
+                        );
 
-                        } else {
+                    } else {
 
-                            final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mContext);
-                            dialogBuilder
-                                    .withTitle("Failed !!")
-                                    .withTitleColor("#FFFFFF")
-                                    .withDividerColor("#727272")
-                                    .withIcon(R.drawable.ic_info_white_24dp)
-                                    .withMessage("Please put details needed")
-                                    .withMessageColor("#FFFFFFFF")
-                                    .withDialogColor("#FFE74C3C")
-                                    .isCancelableOnTouchOutside(false)
-                                    .withDuration(700)
-                                    .withEffect(Effectstype.Fadein)
-                                    .withButton1Text("OK")
-                                    .isCancelableOnTouchOutside(true)
-                                    .setButton1Click(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
+                        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mContext);
+                        dialogBuilder
+                                .withTitle("Failed !!")
+                                .withTitleColor("#FFFFFF")
+                                .withDividerColor("#727272")
+                                .withIcon(R.drawable.ic_info_white_24dp)
+                                .withMessage("Please put details needed")
+                                .withMessageColor("#FFFFFFFF")
+                                .withDialogColor("#FFE74C3C")
+                                .isCancelableOnTouchOutside(false)
+                                .withDuration(700)
+                                .withEffect(Effectstype.Fadein)
+                                .withButton1Text("OK")
+                                .isCancelableOnTouchOutside(true)
+                                .setButton1Click(v -> {
 
-                                            dialogBuilder.dismiss();
-                                            editExam();
-                                        }
-                                    })
+                                    dialogBuilder.dismiss();
+                                    editExam();
+                                })
 
-                                    .show();
+                                .show();
 
-                        }
                     }
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
         dialog.getWindow().getAttributes().windowAnimations = R.style.CustomAnimations_slide;
         dialog.show();

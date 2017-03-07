@@ -4,13 +4,16 @@ import android.app.AlarmManager;
 import android.app.DownloadManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
@@ -45,6 +48,8 @@ import kinsleykajiva.co.zw.cutstudentapp.R;
 
 /**
  * Created by kinsley kajiva on 11/8/2016.Zvaganzirwa nakinsley kajiva musiwa 11/8/2016
+ *
+ * Utility class
  */
 
 public class BuildsData {
@@ -104,54 +109,13 @@ public class BuildsData {
     public static String TIMES_PERIOD_START_copy[] = {"07:00:00", "09:15:00", "11:30:00", "13:45:00", "16:00:00", "18:15:00"};//17:00:00
     public static String TIMES_PERIOD_END_copy[] = {"09:00:00", "11:15:00", "13:30:00", "15:45:00", "18:00:00", "20:15:00"};
 
-
-
-    public static void CreateWriteBackTxt(Context context,String filename,String tosavetxt){
-
-
-        ContextWrapper contextWrapper = new ContextWrapper(context);
-        File directory = contextWrapper.getDir(APP_FOLDER, Context.MODE_PRIVATE);
-        File folder = new File(directory , filename);
-        if(!folder.exists()){ folder.mkdir();}
-        try {
-            File patternDirectory = new File(filename);
-            FileOutputStream fileout=new FileOutputStream (new File(patternDirectory.getAbsolutePath().toString()), true);
-            //FileOutputStream fileout=context.openFileOutput(filename, Context.MODE_PRIVATE);
-            OutputStreamWriter outputWriter=new OutputStreamWriter(fileout);
-            outputWriter.write(tosavetxt);
-            outputWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public static boolean CheckifFileExists(Context context,String filename){
-        return   context.getDir(filename, Context.MODE_PRIVATE).exists() ;
-    }
-    public static  String ReadBackedUpTxt( Context context,String filename){
-        String returnString="";
-        StringBuffer stringBuffer = new StringBuffer();
-        try {
-            File patternDirectory = new File(filename);
-            FileInputStream orifile = new FileInputStream(String.valueOf(new FileInputStream(patternDirectory.getAbsolutePath().toString())));
-            //Attaching BufferedReader to the FileInputStream by the help of InputStreamReader
-
-            BufferedReader inputReader = new BufferedReader(new
-                    FileReader(orifile.getFD()));
-
-            //Reading data line by line and storing it into the stringbuffer
-            while ((returnString = inputReader.readLine()) != null) {
-                stringBuffer.append(returnString + "\n");
-            }
-            Log.e("xxx", "ReadBackedUpTxt: "+stringBuffer );
-            returnString=stringBuffer.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return returnString;
-    }
-
     private SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+
+
+
+
+
+
 
     public static String incrementTime(String mytime) {
         String NewtimeIncreaseByOneHour = "";
@@ -200,7 +164,11 @@ public class BuildsData {
 
         return hasFound ? i : -1;
     }
-
+/**
+ * <p>
+ *     will only restart the app by closing everything and restart afresh hence all static variables will be reset from start
+ * </p>
+ * **/
     public static void doRestart(Context c) {
         try {
             //check if the context is given
@@ -351,28 +319,69 @@ public class BuildsData {
 
 
     }
-
+/**
+ * <p>
+ *     converting milli seconds to hours
+ *
+ * </p>
+ * <p>
+ *
+ * </p>
+ * @param
+ *  @param millis
+ *  @return  String
+ * **/
     private String milliSectoHours(long millis) {
 
-        String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
+        return String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
                 TimeUnit.MILLISECONDS.toMinutes(millis) % TimeUnit.HOURS.toMinutes(1),
                 TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.MINUTES.toSeconds(1));
-        return hms;
+
 
     }
-    public static void DownloadUpdatesApk(Context  context,String url){
+    /**
+     * <p>
+     *     Download  the Update apk into phone memory
+     * </p>
+     * <p>
+     *     will show a notification progress bar until it finishes
+     *     and will show installation action to install the update
+     * </p>
+     * @param context
+     * @param  url
+     * * */
 
+    public static void DownloadUpdatesApk(Context  context,String url){
+        String destination = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/";
+        String fileName = "CutUpDateApp.apk";
+        final Uri uri = Uri.parse("file://" + destination);
         DownloadManager.Request request=new  DownloadManager.Request(Uri.parse(url));
         request.setTitle("Cut-App-Update Download");
         request.setDescription("Downloading Update ...");
         request.allowScanningByMediaScanner();
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,"CutApp.apk");
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+        request.setDestinationInExternalPublicDir(destination,fileName);
         DownloadManager downloadManager=(DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-        downloadManager.enqueue(request);
-new NifftyDialogs(context).messageOk("Check Download Progress In Notification Bar!");
+        final long downloadId = downloadManager.enqueue(request);
 
+        new NifftyDialogs(context).messageOk("Check Download Progress In Notification Bar!");
+
+        BroadcastReceiver onComplete=new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Intent install = new Intent(Intent.ACTION_VIEW);
+                install.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                install.setDataAndType(uri, downloadManager.getMimeTypeForDownloadedFile(downloadId));
+                context.startActivity(install);
+                context.unregisterReceiver(this);
+            }
+        };
+        context.registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
+
+
+
+
     private static String get_device_id(Context ctx) {
 
         final TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
@@ -422,7 +431,14 @@ new NifftyDialogs(context).messageOk("Check Download Progress In Notification Ba
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
 
     }
-
+/**
+ * <p>
+ *     get device ID .useful in identifying device
+ * </p>
+ * @param  context
+ * @return String
+ *
+ * */
     public static String getAndroidDeviceID(Context context) {
         String testee = get_device_id(context);
         return testee.equalsIgnoreCase("nodeviceid") ? getAndroidID(context) : testee;

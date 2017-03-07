@@ -23,7 +23,7 @@ public class MReadPage extends AppCompatActivity {
         if(getIntent().hasExtra(NOTIFICATION_TITLE_ID)){
             RowId= Integer.parseInt(getIntent().getExtras().getString(NOTIFICATION_TITLE_ID));
         }else{
-            RowId= Integer.parseInt(getIntent().getExtras().getString("rowId"));;
+            RowId= Integer.parseInt(getIntent().getExtras().getString("rowId"));
         }
 
         setContentView(R.layout.activity_mread_page);

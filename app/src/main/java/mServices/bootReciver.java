@@ -21,9 +21,7 @@ public class bootReciver extends BroadcastReceiver {
             Realm realm=Realm.getDefaultInstance();
             RealmResults<ClassesLecture> results = realm.where(ClassesLecture.class).equalTo("isReminderSetyet","yes").findAll();
             for (ClassesLecture u : results) {
-
                 configs.CreateAlarm(u.getClassID());
-
             }
             realm.close();
         }

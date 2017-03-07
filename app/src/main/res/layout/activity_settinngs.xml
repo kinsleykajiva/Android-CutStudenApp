@@ -365,7 +365,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:paddingLeft="10dp"
-                android:text="github.com/kinsleykajiva/cutstudentapp"
+                android:text="github.com/kinsleykajiva/Android-CutStudenApp"
                 android:textStyle="normal" />
 
             <View

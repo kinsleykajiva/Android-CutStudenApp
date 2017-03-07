@@ -329,7 +329,7 @@ public class WelcomeSetup extends AppCompatActivity implements InterfaceLoadTime
                     .withTitleColor("#FFFFFF")
                     .withDividerColor("#727272")
                     .withIcon(R.drawable.ic_info_white_24dp)
-                    .withMessage("Timetable download failed.Instead install your Timetable manually ?")
+                    .withMessage("Auto-Install failed.Instead install your Timetable manually ?")
                     .withMessageColor("#FFFFFFFF")
                     .withDialogColor("#FFE74C3C")
                     .isCancelableOnTouchOutside(false)

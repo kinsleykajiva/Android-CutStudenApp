@@ -5,41 +5,44 @@
     <group android:checkableBehavior="single">
         <item
 
-            app:actionViewClass="android.widget.TextView"
             android:id="@+id/nav_notications"
             android:icon="@drawable/ic_message_white_24dp"
-            android:title="Notifications" />
+            android:title="Notifications"
+            app:actionViewClass="android.widget.TextView" />
         <item
 
-            app:actionViewClass="android.widget.TextView"
             android:id="@+id/nav_notes"
-            android:icon="@drawable/ic_note_white_24dp"
-            android:title="Notes" />
+            android:icon="@drawable/notepad"
+            android:title="Notes"
+            app:actionViewClass="android.widget.TextView" />
+        <item
+
+            android:id="@+id/nav_study_tips"
+            android:icon="@drawable/elemental_tip"
+            android:title="Study Tips"
+            android:visible="false" />
     </group>
 
-    <item android:title="Action" >
+    <item android:title="Action">
         <menu>
 
             <item
-                android:title="Get Timetable"
                 android:id="@+id/nav_install"
                 android:icon="@drawable/ic_cloud_download_white_24dp"
-                />
+                android:title="Get Timetable" />
             <item
-                android:title="Get Exam-TimeTable"
                 android:id="@+id/nav_exam"
                 android:icon="@drawable/ic_class_black_24dp"
-                />
+                android:title="Open Exam-TimeTable" />
             <item
-                android:visible="false"
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share App" />
+                android:title="Share App"
+                android:visible="false" />
             <item
-                android:icon="@drawable/ic_info_outline_black_24dp"
                 android:id="@+id/nav_about"
-                android:title="About"
-                />
+                android:icon="@drawable/ic_info_outline_black_24dp"
+                android:title="About" />
 
         </menu>
     </item>

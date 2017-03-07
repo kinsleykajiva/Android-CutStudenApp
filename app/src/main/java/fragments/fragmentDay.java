@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import com.transitionseverywhere.TransitionManager;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import Adapters.ClassLectureRecycler;
@@ -81,7 +83,7 @@ public class fragmentDay extends Fragment {
     private Menu menu;
     private NavigationView navigationView;
     private MenuItem nav_exam,nav_install;
-
+    private ViewGroup root_linear;
     private LinearLayout selectTimes;
     private static String Time_Picked = "07:00:00";
     private static EditText tutorialTimePicker1;
@@ -91,8 +93,6 @@ public class fragmentDay extends Fragment {
     private ClassLectureRecycler adapter;
     private BuildsData configs = new BuildsData();
     private RealmResults results;
-
-
     private String DAY_IN_VIEW = null;
     private String DAY_SPINNER_SELECT = "";
     private static int ORDER_CLASS;
@@ -106,6 +106,7 @@ public class fragmentDay extends Fragment {
             adapter.update(results);
 
             recycler_state.setVisibility(results.isEmpty() ? View.VISIBLE : View.GONE);
+
         }
     };
     private static IntentFilter s_intentFilter;
@@ -161,14 +162,11 @@ public class fragmentDay extends Fragment {
         setOnclickListners();
         if(!myRealm.where(ExaminationDB.class).findAll().isEmpty()){
             nav_exam.setTitle("Go to Exam-Timetable");
-            nav_exam.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem menuItem) {
-                    MyApplication  app = (MyApplication) getActivity().getApplication();
-                    app.setExamMark();
-                    doRestart(getContext());
-                    return false;
-                }
+            nav_exam.setOnMenuItemClickListener(menuItem -> {
+                MyApplication  app = (MyApplication) getActivity().getApplication();
+                app.setExamMark();
+                doRestart(getContext());
+                return false;
             });
         }
 
@@ -184,14 +182,7 @@ public class fragmentDay extends Fragment {
     }
 
     private void setOnclickListners() {
-        fab.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                AddnewClass();
-            }
-
-        });
+        fab.setOnClickListener(v -> AddnewClass());
 
     }
 
@@ -259,16 +250,7 @@ public class fragmentDay extends Fragment {
                 }
             }
         }else if (passedValue.equalsIgnoreCase("6") ) {
-
-            DAY_IN_VIEW = WEEKEND_DAYS[1]; //this is a sunday
-            /*if(!new mSettings(getContext()).getTAB_SUNDAY().isEmpty()  ) {
-                 DAY_IN_VIEW = WEEKEND_DAYS[1]; //this is a sunday
-            }else{
-                if(!new mSettings(getContext()).getTAB_SATURDAY().isEmpty()){
-                    DAY_IN_VIEW = WEEKEND_DAYS[0]; // this is saturday
-                }
-            }*/
-
+            DAY_IN_VIEW = WEEKEND_DAYS[1];
         }
 
         return DAY_IN_VIEW;
@@ -309,12 +291,11 @@ public class fragmentDay extends Fragment {
 
     private void AddnewClass() {
 
-
         final String[] classTypeSelected = new String[1];
         inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View content = inflater.inflate(R.layout.edit_item, null);
         final String[] classarray = getResources().getStringArray(R.array.classtime_arrays);
-
+        root_linear=(ViewGroup) content.findViewById(R.id.root_linear);
         final Spinner spinnerClassTime = (Spinner) content.findViewById(R.id.spinnerClassTime);
         spinnerClassTime.setEnabled(false);
         final Spinner spinnerClassDay = (Spinner) content.findViewById(R.id.spinnerClassDay);
@@ -323,33 +304,27 @@ public class fragmentDay extends Fragment {
         final EditText classVenue_edit = (EditText) content.findViewById(R.id.classVenue_edit);
         tutorialTimePicker1 = (EditText) content.findViewById(R.id.tutorialTimePicker1);
         tutorialTimePicker1.setText("07:00");
-        tutorialTimePicker1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //tutorialTimePicker1.setShowSoftInputOnFocus(false);
+        tutorialTimePicker1.setOnClickListener(view -> {
+            //tutorialTimePicker1.setShowSoftInputOnFocus(false);
 
-                new TimePickerFragment().show(getFragmentManager(), "timePicker");
-            }
+            new TimePickerFragment().show(getFragmentManager(), "timePicker");
         });
-        tutorialTimePicker1.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int inType = tutorialTimePicker1.getInputType(); // backup the input type
-                tutorialTimePicker1.setInputType(InputType.TYPE_NULL); // disable soft input
-                tutorialTimePicker1.onTouchEvent(event); // call native handler
-                tutorialTimePicker1.setInputType(inType); // restore input type
-                return true; // consume touch even
-            }
+        tutorialTimePicker1.setOnTouchListener((v, event) -> {
+            int inType = tutorialTimePicker1.getInputType(); // backup the input type
+            tutorialTimePicker1.setInputType(InputType.TYPE_NULL); // disable soft input
+            tutorialTimePicker1.onTouchEvent(event); // call native handler
+            tutorialTimePicker1.setInputType(inType); // restore input type
+            return true; // consume touch even
         });
         ArrayList<String> temp1=new ArrayList<>();
-        for (String v : classarray) {temp1.add(v); }
+        Collections.addAll(temp1, classarray);
 
         dataAdapter = new CustomSpinnerAdapter(getActivity(),  temp1);
 
         spinnerClassTime.setAdapter(dataAdapter);
         //
         final ArrayList<String> temp2=new ArrayList<>();
-        for (String v : configs.TIMES_DAYS) {temp2.add(v); }
+        Collections.addAll(temp2, configs.TIMES_DAYS);
         if(!new mSettings(getContext()).getTAB_SATURDAY().isEmpty() && !new mSettings(getContext()).getTAB_SUNDAY().isEmpty()){
             temp2.add("Saturday");
             temp2.add("Sunday");
@@ -366,7 +341,7 @@ public class fragmentDay extends Fragment {
         DAY_SPINNER_SELECT = PassedValues(BuildsData.WEEK_DAY_SELECTED);
         //
         ArrayList<String> temp3=new ArrayList<>();
-        for (String v : configs.TYPE_OF_CLASS) {temp3.add(v); }
+        Collections.addAll(temp3, BuildsData.TYPE_OF_CLASS);
         final  CustomSpinnerAdapter dataAdapter3 = new CustomSpinnerAdapter(getActivity(),temp3  );
 
         spinnerClassType.setAdapter(dataAdapter3);
@@ -375,39 +350,9 @@ public class fragmentDay extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-
-                    if (position == 0) {
-                        Time_Select_start[0] = configs.TIMES_PERIOD_START[position];
-                        Time_Select_end[0] = configs.TIMES_PERIOD_END[position];
-                        ORDER_CLASS = configs.CLASS_ORDER[position];
-
-                    } else if (position == 1) {
-                        Time_Select_start[0] = configs.TIMES_PERIOD_START[position];
-                        Time_Select_end[0] = configs.TIMES_PERIOD_END[position];
-                        ORDER_CLASS = configs.CLASS_ORDER[position];
-
-                    } else if (position == 2) {
-                        Time_Select_start[0] = configs.TIMES_PERIOD_START[position];
-                        Time_Select_end[0] = configs.TIMES_PERIOD_END[position];
-                        ORDER_CLASS = configs.CLASS_ORDER[position];
-
-
-                    } else if (position == 3) {
-                        Time_Select_start[0] = configs.TIMES_PERIOD_START[position];
-                        Time_Select_end[0] = configs.TIMES_PERIOD_END[position];
-                        ORDER_CLASS = configs.CLASS_ORDER[position];
-
-
-                    } else if (position == 4) {
-                        Time_Select_start[0] = configs.TIMES_PERIOD_START[position];
-                        Time_Select_end[0] = configs.TIMES_PERIOD_END[position];
-                        ORDER_CLASS = configs.CLASS_ORDER[position];
-
-
-                    }
-
-
-
+                Time_Select_start[0] = configs.TIMES_PERIOD_START[position];
+                Time_Select_end[0] = configs.TIMES_PERIOD_END[position];
+                ORDER_CLASS = configs.CLASS_ORDER[position];
             }
 
             @Override
@@ -419,12 +364,10 @@ public class fragmentDay extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 DAY_SPINNER_SELECT=   temp2.get(position);
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         //
@@ -436,22 +379,23 @@ public class fragmentDay extends Fragment {
 
                 if (position == 0) { //tutorial
 
-                    classTypeSelected[0] = configs.TYPE_OF_CLASS[position];
+                    classTypeSelected[0] = BuildsData.TYPE_OF_CLASS[position];
 
                     spinnerClassTime.setEnabled(false);
                     tutorialTimePicker1.setEnabled(true);
                     spinnerClassTime.setBackgroundResource(R.drawable.background_error);
                     tutorialTimePicker1.setBackgroundResource(R.drawable.custom_spinner_background);
 
+
                     isTutorial = true;
-
+                    TransitionManager.beginDelayedTransition(transitionsContainer);
+                    logoText.setVisibility(View.VISIBLE);
+                    spinnerClassTime
                 } else if (position == 1) { //lecture
-                    classTypeSelected[0] = configs.TYPE_OF_CLASS[position];
-
+                    classTypeSelected[0] = BuildsData.TYPE_OF_CLASS[position];
                     isTutorial = false;
                     spinnerClassTime.setEnabled(true);
                     tutorialTimePicker1.setEnabled(false);
-
                     spinnerClassTime.setBackgroundResource(R.drawable.custom_spinner_background);
                     tutorialTimePicker1.setBackgroundResource(R.drawable.background_error);
 
@@ -466,96 +410,57 @@ public class fragmentDay extends Fragment {
         //
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(content)
-                .setTitle("Add a New class.")
+                .setTitle("Add a New Class.")
                 .setCancelable(false)
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setPositiveButton("Add", (dialog, which) -> {
+                    if (!className_edit.getText().toString().trim().isEmpty() && !classVenue_edit.getText().toString().trim().isEmpty()) {
 
 
-                        if (!className_edit.getText().toString().trim().isEmpty() && !classVenue_edit.getText().toString().trim().isEmpty()) {
-                            if (CRUD.isClassAvailable(className_edit.getText().toString().trim())) {
-                                final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(getActivity());
-                                dialogBuilder
-                                        .withTitle("Failed !!")
-                                        .withTitleColor("#FFFFFF")
-                                        .withDividerColor("#727272")
-                                        .withIcon(R.drawable.ic_info_white_24dp)
-                                        .withMessage("There is already a class with that name.")
-                                        .withMessageColor("#FFFFFFFF")
-                                        .withDialogColor("#FFE74C3C")
-                                        .isCancelableOnTouchOutside(false)
-                                        .withDuration(700)
-                                        .withEffect(Effectstype.Fadein)
-                                        .withButton1Text("OK")
-                                        .isCancelableOnTouchOutside(true)
-                                        .setButton1Click(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
+                            new CRUD().writeToDb(
+                                    DAY_SPINNER_SELECT,
+                                    Time_Select_start[0],
+                                    Time_Select_end[0],
+                                    className_edit.getText().toString().trim(),
+                                    classVenue_edit.getText().toString().trim(),
+                                    "" + ORDER_CLASS,
+                                    configs.IS_REMINDER_SET[0],
+                                    classTypeSelected[0]
 
-                                                dialogBuilder.dismiss();
-                                                AddnewClass();
-                                            }
-                                        })
-
-                                        .show();
-                            } else {
-                               // Log.e("xxx", "onClick:->  day is what "+DAY_SPINNER_SELECT);
-                                new CRUD().writeToDb(
-                                        DAY_SPINNER_SELECT,
-                                        Time_Select_start[0],
-                                        Time_Select_end[0],
-                                        className_edit.getText().toString().trim(),
-                                        classVenue_edit.getText().toString().trim(),
-                                        "" + ORDER_CLASS,
-                                        configs.IS_REMINDER_SET[0],
-                                        classTypeSelected[0]
-
-                                );
-                                setUpRecyclerview();
-                                dialog.dismiss();
-                            }
-
-                        } else {
+                            );
+                            setUpRecyclerview();
+                            dialog.dismiss();
 
 
-                            final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(getActivity());
-                            dialogBuilder
-                                    .withTitle("Failed !!")
-                                    .withTitleColor("#FFFFFF")
-                                    .withDividerColor("#727272")
-                                    .withIcon(R.drawable.ic_info_white_24dp)
-                                    .withMessage("Please put details needed")
-                                    .withMessageColor("#FFFFFFFF")
-                                    .withDialogColor("#FFE74C3C")
-                                    .isCancelableOnTouchOutside(false)
-                                    .withDuration(700)
-                                    .withEffect(Effectstype.Fadein)
-                                    .withButton1Text("OK")
-                                    .isCancelableOnTouchOutside(true)
-                                    .setButton1Click(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
+                    } else {
 
-                                            dialogBuilder.dismiss();
-                                            AddnewClass();
-                                        }
-                                    })
 
-                                    .show();
+                        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(getActivity());
+                        dialogBuilder
+                                .withTitle("Failed !!")
+                                .withTitleColor("#FFFFFF")
+                                .withDividerColor("#727272")
+                                .withIcon(R.drawable.ic_info_white_24dp)
+                                .withMessage("Please put details needed")
+                                .withMessageColor("#FFFFFFFF")
+                                .withDialogColor("#FFE74C3C")
+                                .isCancelableOnTouchOutside(false)
+                                .withDuration(700)
+                                .withEffect(Effectstype.Fadein)
+                                .withButton1Text("OK")
+                                .isCancelableOnTouchOutside(true)
+                                .setButton1Click(v -> {
 
-                        }
+                                    dialogBuilder.dismiss();
+                                    AddnewClass();
+                                })
 
+                                .show();
 
                     }
+
+
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
         dialog.getWindow().getAttributes().windowAnimations = R.style.CustomAnimations_slide;
         dialog.show();

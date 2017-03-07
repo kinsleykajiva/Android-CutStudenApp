@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import Messages.SeeToast;
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
 
 public class CrashActivity extends AppCompatActivity {
@@ -18,10 +19,16 @@ public class CrashActivity extends AppCompatActivity {
  ((TextView) findViewById(R.id.error_details)).setText(
          "For programmers only: \n\n"+
                  CustomActivityOnCrash.getStackTraceFromIntent(getIntent()));
+        new SeeToast().message_short(this,"Ooops Restarting...");
+        RestartApp();
 
     }
 
     public void RestartApp(View f){
+        RestartApp();
+    }
+
+    public void RestartApp(){
         final Class<? extends Activity> restartActivityClass = CustomActivityOnCrash.getRestartActivityClassFromIntent(getIntent());
         final CustomActivityOnCrash.EventListener eventListener = CustomActivityOnCrash.getEventListenerFromIntent(getIntent());
         if (restartActivityClass != null) {

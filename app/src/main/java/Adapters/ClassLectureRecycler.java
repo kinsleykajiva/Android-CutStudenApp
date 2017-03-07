@@ -42,6 +42,7 @@ import com.nispok.snackbar.listeners.ActionClickListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 import static jonathanfinerty.once.Once.THIS_APP_INSTALL;
 import static jonathanfinerty.once.Once.beenDone;
@@ -130,7 +131,7 @@ public class ClassLectureRecycler extends RecyclerView.Adapter<ClassLectureRecyc
 
         //this is an initial setting of class type(e.g lecture or tutorial) but is open to changing value
         // if the time zones are triggered to check if the time is within time range to set colorings
-        if (ClasssTypeof.equalsIgnoreCase(configs.TYPE_OF_CLASS[0])) {
+        if (ClasssTypeof.equalsIgnoreCase(BuildsData.TYPE_OF_CLASS[0])) {
             holder.classstate.setText(configs.TUTORIAL_CLASS_STATE[0]);
         } else {
             holder.classstate.setText(configs.LECTURE_CLASS_STATE[0]);
@@ -152,7 +153,7 @@ public class ClassLectureRecycler extends RecyclerView.Adapter<ClassLectureRecyc
                 tooltip1.show();
             }
             holder.classStartTime.setBackgroundColor(BuildsData.getColor(mContext, R.color.onGoin));
-            if (ClasssTypeof.equalsIgnoreCase(configs.TYPE_OF_CLASS[0])) {
+            if (ClasssTypeof.equalsIgnoreCase(BuildsData.TYPE_OF_CLASS[0])) {
                 holder.classstate.setText(configs.TUTORIAL_CLASS_STATE[1]);
             } else {
                 holder.classstate.setText(configs.LECTURE_CLASS_STATE[1]);
@@ -172,7 +173,7 @@ public class ClassLectureRecycler extends RecyclerView.Adapter<ClassLectureRecyc
                             .build();
                     tooltip2.show();
                 }
-                if (ClasssTypeof.equalsIgnoreCase(configs.TYPE_OF_CLASS[0])) {
+                if (ClasssTypeof.equalsIgnoreCase(BuildsData.TYPE_OF_CLASS[0])) {
                     holder.classstate.setText(configs.TUTORIAL_CLASS_STATE[2]);
                 } else {
                     holder.classstate.setText(configs.LECTURE_CLASS_STATE[2]);
@@ -182,23 +183,13 @@ public class ClassLectureRecycler extends RecyclerView.Adapter<ClassLectureRecyc
         if (feedItem.getIsReminderSetyet().equalsIgnoreCase(configs.IS_REMINDER_SET[1])) {
             holder.classModuleName.setTextColor(BuildsData.getColor(mContext, R.color.almostDone));
             holder.alamset_state.setVisibility(View.VISIBLE);
-            holder.overflow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    UNSEtReminder_showPopupMenu(holder.overflow, feedItem.getClassID());
-                }
-            });
+            holder.overflow.setOnClickListener(view -> UNSEtReminder_showPopupMenu(holder.overflow, feedItem.getClassID()));
 
         } else {
 
             holder.alamset_state.setVisibility(View.INVISIBLE);
             holder.classModuleName.setTextColor(BuildsData.getColor(mContext, R.color.black));
-            holder.overflow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showPopupMenu(holder.overflow, feedItem.getClassID());
-                }
-            });
+            holder.overflow.setOnClickListener(view -> showPopupMenu(holder.overflow, feedItem.getClassID()));
         }
         holder.classEndTime.setText(t2.substring(0, t1.length() - 3));
         holder.classModuleName.setText(feedItem.getClassModuleName());
@@ -227,7 +218,7 @@ public class ClassLectureRecycler extends RecyclerView.Adapter<ClassLectureRecyc
     @Override
     public int getItemViewType(int position) {
         return (
-                feedItemList.get(position).getTypeOfClass().equalsIgnoreCase(configs.TYPE_OF_CLASS[1]) ? TUTORIAL_CLASS : LECTURE_CLASS
+                feedItemList.get(position).getTypeOfClass().equalsIgnoreCase(BuildsData.TYPE_OF_CLASS[1]) ? TUTORIAL_CLASS : LECTURE_CLASS
         );
 
     }
@@ -281,24 +272,18 @@ public class ClassLectureRecycler extends RecyclerView.Adapter<ClassLectureRecyc
         final EditText className_edit = (EditText) content.findViewById(R.id.className_edit);
         tutorialTimePicker1 = (EditText) content.findViewById(R.id.tutorialTimePicker1);
         tutorialTimePicker1.setText(BuildsData.RemoveLastChars(Time_Picked, 3));
-        tutorialTimePicker1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //tutorialTimePicker1.setShowSoftInputOnFocus(false);
+        tutorialTimePicker1.setOnClickListener(view -> {
+            //tutorialTimePicker1.setShowSoftInputOnFocus(false);
 
 
-                new TimePickerFragment().show(fragmentManager, "timePicker");
-            }
+            new TimePickerFragment().show(fragmentManager, "timePicker");
         });
-        tutorialTimePicker1.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int inType = tutorialTimePicker1.getInputType(); // backup the input type
-                tutorialTimePicker1.setInputType(InputType.TYPE_NULL); // disable soft input
-                tutorialTimePicker1.onTouchEvent(event); // call native handler
-                tutorialTimePicker1.setInputType(inType); // restore input type
-                return true; // consume touch even
-            }
+        tutorialTimePicker1.setOnTouchListener((v, event) -> {
+            int inType = tutorialTimePicker1.getInputType(); // backup the input type
+            tutorialTimePicker1.setInputType(InputType.TYPE_NULL); // disable soft input
+            tutorialTimePicker1.onTouchEvent(event); // call native handler
+            tutorialTimePicker1.setInputType(inType); // restore input type
+            return true; // consume touch even
         });
         className_edit.setText(there_was_className);
         final AutoCompleteTextView classVenue_edit = (AutoCompleteTextView) content.findViewById(R.id.classVenue_edit);
@@ -307,7 +292,8 @@ public class ClassLectureRecycler extends RecyclerView.Adapter<ClassLectureRecyc
         classVenue_edit.setThreshold(1);
         ///
         ArrayList<String> temp1=new ArrayList<>();
-        for (String v : classarray) {temp1.add(v); }
+        //for (String v : classarray) {temp1.add(v); }
+        Collections.addAll(temp1, classarray);
         final CustomSpinnerAdapter dataAdapter = new CustomSpinnerAdapter(mContext,  temp1);
 
 
@@ -332,7 +318,7 @@ public class ClassLectureRecycler extends RecyclerView.Adapter<ClassLectureRecyc
         }
         //
         final ArrayList<String> temp2=new ArrayList<>();
-        for (String v : configs.TIMES_DAYS) {temp2.add(v); }
+        Collections.addAll(temp2, configs.TIMES_DAYS);
         if(!new mSettings(mContext).getTAB_SATURDAY().isEmpty() && !new mSettings(mContext).getTAB_SUNDAY().isEmpty()){
             temp2.add("Saturday");
             temp2.add("Sunday");
@@ -348,7 +334,7 @@ public class ClassLectureRecycler extends RecyclerView.Adapter<ClassLectureRecyc
         DAY_SPINNER_SELECT = rslts.getClassDay();
         //
         ArrayList<String> temp3=new ArrayList<>();
-        for (String v : configs.TYPE_OF_CLASS) {temp3.add(v); }
+        Collections.addAll(temp3, BuildsData.TYPE_OF_CLASS);
         final  CustomSpinnerAdapter dataAdapter3 = new CustomSpinnerAdapter(mContext,temp3  );
 
         spinnerClassType.setAdapter(dataAdapter3);
@@ -420,7 +406,7 @@ public class ClassLectureRecycler extends RecyclerView.Adapter<ClassLectureRecyc
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) { //tutorial
-                    classTypeSelected[0] = configs.TYPE_OF_CLASS[position];
+                    classTypeSelected[0] = BuildsData.TYPE_OF_CLASS[position];
                     isTutorial = true;
                     spinnerClassTime.setEnabled(false);
                     tutorialTimePicker1.setEnabled(true);
@@ -428,7 +414,7 @@ public class ClassLectureRecycler extends RecyclerView.Adapter<ClassLectureRecyc
                     tutorialTimePicker1.setBackgroundResource(R.drawable.custom_spinner_background);
 
                 } else if (position == 1) { //lecture
-                    classTypeSelected[0] = configs.TYPE_OF_CLASS[position];
+                    classTypeSelected[0] = BuildsData.TYPE_OF_CLASS[position];
                     isTutorial = false;
                     spinnerClassTime.setEnabled(true);
                     tutorialTimePicker1.setEnabled(false);
@@ -446,72 +432,55 @@ public class ClassLectureRecycler extends RecyclerView.Adapter<ClassLectureRecyc
         builder.setView(content)
                 .setTitle("Edit Class.")
                 .setCancelable(false)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (!className_edit.getText().toString().trim().isEmpty() && !classVenue_edit.getText().toString().trim().isEmpty()) {
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    if (!className_edit.getText().toString().trim().isEmpty() && !classVenue_edit.getText().toString().trim().isEmpty()) {
 
-                            CRUD.updateClassDB(
-                                    DAY_SPINNER_SELECT,
-                                    Time_Select_start[0] + ":00",
-                                    Time_Select_end[0] + ":00",
-                                    className_edit.getText().toString().trim(),
-                                    classVenue_edit.getText().toString().trim(),
-                                    "" + ORDER_CLASS,
-                                    configs.IS_REMINDER_SET[0],
-                                    classTypeSelected[0],
-                                    rowID + ""
-                            );
-                            dialog.dismiss();
-                            SnackbarManager.show(
-                                    Snackbar.with(mContext)
-                                            .text("Class Edited.")
-                                            .actionLabel(/*"Undo"*/"") // action button label
-                                            .actionColor(Color.RED)
-                                            .duration(1000 * 4)
-                                            .actionListener(new ActionClickListener() {
-                                                @Override
-                                                public void onActionClicked(Snackbar snackbar) {
-                                                    Toast.makeText(mContext, "UNDoin....", Toast.LENGTH_LONG).show();
-                                                }
-                                            })
+                        CRUD.updateClassDB(
+                                DAY_SPINNER_SELECT,
+                                Time_Select_start[0] + ":00",
+                                Time_Select_end[0] + ":00",
+                                className_edit.getText().toString().trim(),
+                                classVenue_edit.getText().toString().trim(),
+                                "" + ORDER_CLASS,
+                                configs.IS_REMINDER_SET[0],
+                                classTypeSelected[0],
+                                rowID + ""
+                        );
+                        dialog.dismiss();
+                        SnackbarManager.show(
+                                Snackbar.with(mContext)
+                                        .text("Class Edited.")
+                                        .actionLabel(/*"Undo"*/"") // action button label
+                                        .actionColor(Color.RED)
+                                        .duration(1000 * 4)
+                                        .actionListener(snackbar -> Toast.makeText(mContext, "UNDoin....", Toast.LENGTH_LONG).show())
 
-                            );
-                        } else {
-                            final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mContext);
-                            dialogBuilder
-                                    .withTitle("Failed !!")
-                                    .withTitleColor("#FFFFFF")
-                                    .withDividerColor("#727272")
-                                    .withIcon(R.drawable.ic_info_white_24dp)
-                                    .withMessage("Please put details needed")
-                                    .withMessageColor("#FFFFFFFF")
-                                    .withDialogColor("#FFE74C3C")
-                                    .isCancelableOnTouchOutside(false)
-                                    .withDuration(700)
-                                    .withEffect(Effectstype.Fadein)
-                                    .withButton1Text("Save")
-                                    .isCancelableOnTouchOutside(true)
-                                    .setButton1Click(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
+                        );
+                    } else {
+                        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mContext);
+                        dialogBuilder
+                                .withTitle("Failed !!")
+                                .withTitleColor("#FFFFFF")
+                                .withDividerColor("#727272")
+                                .withIcon(R.drawable.ic_info_white_24dp)
+                                .withMessage("Please put details needed")
+                                .withMessageColor("#FFFFFFFF")
+                                .withDialogColor("#FFE74C3C")
+                                .isCancelableOnTouchOutside(false)
+                                .withDuration(700)
+                                .withEffect(Effectstype.Fadein)
+                                .withButton1Text("Save")
+                                .isCancelableOnTouchOutside(true)
+                                .setButton1Click(v -> {
 
-                                            dialogBuilder.dismiss();
-                                            rowIdTOEdit = rowID;
-                                            EditClass(rowIdTOEdit);
-                                        }
-                                    })
-                                    .show();
-                        }
+                                    dialogBuilder.dismiss();
+                                    rowIdTOEdit = rowID;
+                                    EditClass(rowIdTOEdit);
+                                })
+                                .show();
                     }
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
         dialog.show();
 
@@ -548,43 +517,32 @@ public class ClassLectureRecycler extends RecyclerView.Adapter<ClassLectureRecyc
                             .isCancelableOnTouchOutside(false)
                             .withEffect(new NifftyDialogs(mContext).stylepop_up())
                             .withDuration(700)
-                            .setButton1Click(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    crud.DeleteClass(rowID);
-                                    notifyItemRemoved(rowID);
-                                    Myalarm.CancelAlarm(mContext, rowID);
-                                    dialogBuilder.dismiss();
-                                    SnackbarManager.show(
-                                            Snackbar.with(mContext)
-                                                    .text("Succefully Deleted.")
-                                                    .actionLabel(/*"Undo"*/"") // action button label
-                                                    .actionColor(Color.RED)
-                                                    .duration(1000 * 4)
-                                                    .actionListener(new ActionClickListener() {
-                                                        @Override
-                                                        public void onActionClicked(Snackbar snackbar) {
-                                                            Toast.makeText(mContext, "UNDoin....", Toast.LENGTH_LONG).show();
-                                                        }
-                                                    })
+                            .setButton1Click(v -> {
+                                crud.DeleteClass(rowID);
+                                notifyItemRemoved(rowID);
+                                Myalarm.CancelAlarm(mContext, rowID);
+                                dialogBuilder.dismiss();
+                                SnackbarManager.show(
+                                        Snackbar.with(mContext)
+                                                .text("Succefully Deleted.")
+                                                .actionLabel(/*"Undo"*/"") // action button label
+                                                .actionColor(Color.RED)
+                                                .duration(1000 * 4)
+                                                .actionListener(snackbar -> Toast.makeText(mContext, "UNDoin....", Toast.LENGTH_LONG).show())
 
-                                    );
+                                );
 
-                                }
                             })
-                            .setButton2Click(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
+                            .setButton2Click(v -> {
 
-                                    dialogBuilder.dismiss();
+                                dialogBuilder.dismiss();
 
-                                    SnackbarManager.show(
-                                            Snackbar.with(mContext)
-                                                    .text("Eheka.. Usadeleter,waka uya kuzo funda lol...")
+                                SnackbarManager.show(
+                                        Snackbar.with(mContext)
+                                                .text("Eheka.. Usadeleter,waka uya kuzo funda lol...")
 
-                                    );
+                                );
 
-                                }
                             })
                             .show();
                     return true;
@@ -629,42 +587,36 @@ public class ClassLectureRecycler extends RecyclerView.Adapter<ClassLectureRecyc
                             .isCancelableOnTouchOutside(false)
                             .withEffect(new NifftyDialogs(mContext).stylepop_up())
                             .withDuration(700)
-                            .setButton1Click(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    crud.DeleteClass(rowID);
-                                    notifyItemRemoved(rowID);
-                                    Myalarm.CancelAlarm(mContext, rowID);
-                                    dialogBuilder.dismiss();
-                                    SnackbarManager.show(
-                                            Snackbar.with(mContext)
-                                                    .text("Succefully Deleted.")
-                                                    .actionLabel("Undo") // action button label
-                                                    .actionColor(Color.RED)
-                                                    .actionListener(new ActionClickListener() {
-                                                        @Override
-                                                        public void onActionClicked(Snackbar snackbar) {
-                                                            Toast.makeText(mContext, "UNDoin....", Toast.LENGTH_LONG).show();
-                                                        }
-                                                    })
+                            .setButton1Click(v -> {
+                                crud.DeleteClass(rowID);
+                                notifyItemRemoved(rowID);
+                                Myalarm.CancelAlarm(mContext, rowID);
+                                dialogBuilder.dismiss();
+                                SnackbarManager.show(
+                                        Snackbar.with(mContext)
+                                                .text("Succefully Deleted.")
+                                                .actionLabel("Undo") // action button label
+                                                .actionColor(Color.RED)
+                                                .actionListener(new ActionClickListener() {
+                                                    @Override
+                                                    public void onActionClicked(Snackbar snackbar) {
+                                                        Toast.makeText(mContext, "UNDoin....", Toast.LENGTH_LONG).show();
+                                                    }
+                                                })
 
-                                    );
+                                );
 
-                                }
                             })
-                            .setButton2Click(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
+                            .setButton2Click(v -> {
 
-                                    dialogBuilder.dismiss();
+                                dialogBuilder.dismiss();
 
-                                    SnackbarManager.show(
-                                            Snackbar.with(mContext)
-                                                    .text("Eheka.. Usadeleter,waka uya kuzo funda lol...")
+                                SnackbarManager.show(
+                                        Snackbar.with(mContext)
+                                                .text("Eheka.. Usadeleter,waka uya kuzo funda lol...")
 
-                                    );
+                                );
 
-                                }
                             })
                             .show();
 

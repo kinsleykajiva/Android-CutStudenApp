@@ -103,8 +103,6 @@ private Menu menu;
     private NavigationView navigationView;
     private MenuItem nav_exam,nav_install;
 
-
-
     private static String Time_Picked = "",examDate="";
     private static EditText timpicker,datePicker;
     private Realm myRealm;
@@ -127,8 +125,9 @@ private Menu menu;
         public void onChange(Object element) {
             processRecyclerAdapter( results );
             adapter.update(consolidatedList);
-            nav_install.setTitle(results.isEmpty()?"Go to Timetable":"Timetable");
+           // nav_install.setTitle(results.isEmpty()?"Go to Timetable":"Timetable");
             recycler_state.setVisibility(results.isEmpty() ? View.VISIBLE : View.GONE);
+
         }
     };
     @Override
@@ -277,14 +276,9 @@ private Menu menu;
     }
 
     private void setOnclickListners() {
-        fab.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-             //   DeleteAllExams();
-                AddnewExam();
-            }
-
+        fab.setOnClickListener(v -> {
+         //   DeleteAllExams();
+            AddnewExam();
         });
 
     }
@@ -300,94 +294,64 @@ private Menu menu;
 
 
 
-        timpicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                new TimePickerFragment().show(getFragmentManager(), "timePicker");
-            }
+        timpicker.setOnClickListener(view -> new TimePickerFragment().show(getFragmentManager(), "timePicker"));
+        datePicker.setOnClickListener(view -> new DatePickerFragment().show(getFragmentManager(), "datePicker"));
+        timpicker.setOnTouchListener((v, event) -> {
+            int inType = timpicker.getInputType(); // backup the input type
+            timpicker.setInputType(InputType.TYPE_NULL); // disable soft input
+            timpicker.onTouchEvent(event); // call native handler
+            timpicker.setInputType(inType); // restore input type
+            return true; // consume touch even
         });
-        datePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                new DatePickerFragment().show(getFragmentManager(), "datePicker");
-            }
-        });
-        timpicker.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int inType = timpicker.getInputType(); // backup the input type
-                timpicker.setInputType(InputType.TYPE_NULL); // disable soft input
-                timpicker.onTouchEvent(event); // call native handler
-                timpicker.setInputType(inType); // restore input type
-                return true; // consume touch even
-            }
-        });
-        datePicker.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int inType = timpicker.getInputType(); // backup the input type
-                datePicker.setInputType(InputType.TYPE_NULL); // disable soft input
-                datePicker.onTouchEvent(event); // call native handler
-                datePicker.setInputType(inType); // restore input type
-                return true; // consume touch even
-            }
+        datePicker.setOnTouchListener((v, event) -> {
+            int inType = timpicker.getInputType(); // backup the input type
+            datePicker.setInputType(InputType.TYPE_NULL); // disable soft input
+            datePicker.onTouchEvent(event); // call native handler
+            datePicker.setInputType(inType); // restore input type
+            return true; // consume touch even
         });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(content)
                 .setTitle("Add Exam.")
                 .setCancelable(false)
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (!datePicker.getText().toString().trim().isEmpty() && !timpicker.getText().toString().trim().isEmpty() && !className_edit.getText().toString().trim().isEmpty() && !classVenue_edit.getText().toString().trim().isEmpty()) {
-                            ArrayList<ExaminationDB> tp = new ArrayList<>();
-                            tp.add(new ExaminationDB(DAY_SELECT, Time_Select_start[0], Time_Select_end[0], classVenue_edit.getText().toString().trim(), className_edit.getText().toString().trim(), examDate, 0, false, false));
-                            if(isExamAlreadySaved(className_edit.getText().toString().trim())){
-                                new NifftyDialogs(getContext()).messageOkError("Error","That Exam Module already exist.Delete then Add.");
-                            }else{
-                                initWriteExamination(tp);
-                            }
-
-                        } else {
-
-                            final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(getActivity());
-                            dialogBuilder
-                                    .withTitle("Failed !!")
-                                    .withTitleColor("#FFFFFF")
-                                    .withDividerColor("#727272")
-                                    .withIcon(R.drawable.ic_info_white_24dp)
-                                    .withMessage("Please put details needed")
-                                    .withMessageColor("#FFFFFFFF")
-                                    .withDialogColor("#FFE74C3C")
-                                    .isCancelableOnTouchOutside(false)
-                                    .withDuration(700)
-                                    .withEffect(Effectstype.Fadein)
-                                    .withButton1Text("OK")
-                                    .isCancelableOnTouchOutside(true)
-                                    .setButton1Click(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-
-                                            dialogBuilder.dismiss();
-                                            AddnewExam();
-                                        }
-                                    })
-
-                                    .show();
-
+                .setPositiveButton("Add", (dialog, which) -> {
+                    if (!datePicker.getText().toString().trim().isEmpty() && !timpicker.getText().toString().trim().isEmpty() && !className_edit.getText().toString().trim().isEmpty() && !classVenue_edit.getText().toString().trim().isEmpty()) {
+                        ArrayList<ExaminationDB> tp = new ArrayList<>();
+                        tp.add(new ExaminationDB(DAY_SELECT, Time_Select_start[0], Time_Select_end[0], classVenue_edit.getText().toString().trim(), className_edit.getText().toString().trim(), examDate, 0, false, false));
+                        if(isExamAlreadySaved(className_edit.getText().toString().trim())){
+                            new NifftyDialogs(getContext()).messageOkError("Error","That Exam Module already exist.Delete then Add.");
+                        }else{
+                            initWriteExamination(tp);
                         }
+
+                    } else {
+
+                        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(getActivity());
+                        dialogBuilder
+                                .withTitle("Failed !!")
+                                .withTitleColor("#FFFFFF")
+                                .withDividerColor("#727272")
+                                .withIcon(R.drawable.ic_info_white_24dp)
+                                .withMessage("Please put details needed")
+                                .withMessageColor("#FFFFFFFF")
+                                .withDialogColor("#FFE74C3C")
+                                .isCancelableOnTouchOutside(false)
+                                .withDuration(700)
+                                .withEffect(Effectstype.Fadein)
+                                .withButton1Text("OK")
+                                .isCancelableOnTouchOutside(true)
+                                .setButton1Click(v -> {
+
+                                    dialogBuilder.dismiss();
+                                    AddnewExam();
+                                })
+
+                                .show();
+
                     }
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
       dialog.getWindow().getAttributes().windowAnimations = R.style.CustomAnimations_slide;
         dialog.show();
@@ -432,18 +396,18 @@ private Menu menu;
         menu = navigationView.getMenu();
         nav_exam= menu.findItem(R.id.nav_exam);
         nav_install= menu.findItem(R.id.nav_install);
-       // nav_exam.setTitle("NewTitleForCamera");
 
-        if(isExamTime)
-        nav_install.setTitle("Go to Timetable");
+        recycler_state.setVisibility(results.isEmpty()?View.VISIBLE:View.GONE);
 
-        nav_install.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                Once.clearDone(EXAM_TIME_KEY);
-                doRestart(context);
-                return false;
-            }
+        if(isExamTime) {
+            nav_install.setTitle("Go to Timetable");
+            nav_install.setIcon(BuildsData.getResourceDrawable(context,R.drawable.ic_class_black_24dp));
+            nav_exam.setVisible(false);
+        }
+        nav_install.setOnMenuItemClickListener(menuItem -> {
+            Once.clearDone(EXAM_TIME_KEY);
+            doRestart(context);
+            return false;
         });
         mRecyclerView = (RecyclerView) layout.findViewById(R.id.recycler_viewClass);
 
