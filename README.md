@@ -12,6 +12,8 @@ you will need internet when importing this project in android studio as there ar
 Good luck feel free to fork or make an issue for this or contact me for further understanding of the code it self. 
 
 -----------------Start of Advanced Read Me ---------------------------------
+
+
 This is a bit more detailed section so this you may not find it very necessary .
 
 The app in the code section you may find that there are modules that have not been used or called in some  sections.
