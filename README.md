@@ -41,3 +41,10 @@ screenshots:
 ![Screenshot 2](art/Screenshot_2016-07-08-18-30-55.png)
 ![Screenshot 3](art/Screenshot_2016-07-08-18-30-59.png)
 
+![Screenshot 4](art/Screenshot_2016-07-08-18-29-26.png)
+![Screenshot 5](art/Screenshot_2016-07-08-18-29-12.png)
+![Screenshot 6](art/Screenshot_2016-07-08-18-28-55.png)
+
+![Screenshot 7](art/Screenshot_2016-07-08-17-17-08.png)
+
+
