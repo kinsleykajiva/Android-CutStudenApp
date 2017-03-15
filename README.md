@@ -37,5 +37,7 @@ download link to apk debug version:http://zimcybers.co.zw/CUT-Student-debug.apk
 
 screenshots:
 
-![alt tag](art/Screenshot_2016-07-08-18-30-49.png)
+![Screenshot 1](art/Screenshot_2016-07-08-18-30-49.png)
+![Screenshot 2](art/Screenshot_2016-07-08-18-30-55.png)
+![Screenshot 3](art/Screenshot_2016-07-08-18-30-59.png)
 
