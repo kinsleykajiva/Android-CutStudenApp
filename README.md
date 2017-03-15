@@ -23,7 +23,7 @@ The app ability to make server download have been removed but the code is there.
 The Server Admin section has been eliminated .
 
 
-
+download link to apk debug version:http://zimcybers.co.zw/CUT-Student-debug.apk
 
 
 
