@@ -44,7 +44,7 @@ android {
         exclude 'LICENSE.txt'
     }
 }
-String CompatLibVersion='25.2.0'
+String CompatLibVersion='25.3.1'
 repositories {
     mavenCentral()
     maven { url "https://jitpack.io" }
@@ -62,7 +62,7 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:9.2.0'
    /// compile "com.android.support:customtabs:$CompatLibVersion"
 
-    compile 'com.squareup.okhttp3:okhttp:3.5.0'
+    compile 'com.squareup.okhttp3:okhttp:3.7.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.sd6352051:NiftyDialogEffects:1.0.0'
     compile 'com.nispok:snackbar:2.11.0'
@@ -70,7 +70,7 @@ dependencies {
     compile 'cat.ereza:customactivityoncrash:1.5.0'
     compile 'com.github.douglasjunior:android-simple-tooltip:0.1.2'
     compile 'com.getkeepsafe.taptargetview:taptargetview:1.5.1'
-    compile 'com.google.code.gson:gson:2.6.1'
+    compile 'com.google.code.gson:gson:2.8.0'
 
     compile 'com.github.javiersantos:BottomDialogs:1.2.1'
     compile 'com.github.flipkart-incubator:circular-image:1.0'
