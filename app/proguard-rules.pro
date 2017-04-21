@@ -29,8 +29,9 @@
 -keepattributes *Annotation*,Signature,EnclosingMethod,ElementList,Root,Annotation,InnerClasses
 
 ## Retrolambda specific rules ##
-
 -dontwarn java.lang.invoke.*
+-dontwarn **$$Lambda$*
+
 
 #Android
 -keep public class * extends android.app.Activity
