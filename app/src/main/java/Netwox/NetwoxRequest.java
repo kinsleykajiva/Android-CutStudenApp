@@ -1,8 +1,5 @@
 package Netwox;
 
-import android.content.Context;
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +22,10 @@ import static DBAccess.RealmDB.CRUD.DeleteAllExams;
 
 /**
  * Created by kinsley kajiva on 6/28/2016.Zvaganzirwa nakinsley kajiva musiwa 6/28/2016
+ *
+ * <p>
+ *    Most of the data from the server wil be parsed in the form of Json data
+ * </p>
  */
 public class NetwoxRequest {
 
@@ -37,6 +38,16 @@ public class NetwoxRequest {
     public NetwoxRequest() {
 
     }
+    /**
+     * <p>
+     *     This will be called to get timetable for the examination from the server.
+     *     This will return a json string of the timetable data
+     * </p>
+     * @param school
+     * @param department
+     * @param level
+     * @return Json-Content-String
+     * */
 public static String GetExamTimeTable(String school, String department, String level ){
     String returningValue = "";
 
@@ -63,7 +74,14 @@ public static String GetExamTimeTable(String school, String department, String l
     return returningValue;
 
 }
-
+/**
+ * <p>
+ *     This is a void method, will process the string from the GetExamTimeTable() method.
+ * </p>
+ * <p>
+ *     This will write to the realm database as it parses the json string argument
+ * </p>
+ * @param json */
     public static void processExamJson(String json) {
         List<ExaminationDB> temp=new ArrayList<>();
         try {
@@ -86,7 +104,15 @@ public static String GetExamTimeTable(String school, String department, String l
             e.printStackTrace();
         }
     }
-
+/**
+ * <p>
+ *     Will get the android application version from the server.<br>
+ *     The first index will contain the version-Code . <br>
+ *     The second index will  contain version Name.
+ *
+ * </p>
+ * @return String Array
+ * */
     public static String[] getAppVersions() {
         String[] returnValu = new String[2];
         try {
@@ -112,7 +138,18 @@ public static String GetExamTimeTable(String school, String department, String l
         return returnValu;
 
     }
-
+    /**
+     * <p>
+     *     Will get the time table data from the server.<br>
+     *     Will also return a string of the time table dta in the form of Json data type
+     *
+     *
+     * </p>
+     * @param school
+     * @param department
+     * @param level
+     * @return Json-String
+     * */
     public String GetTimeTable(String school, String department, String level) throws JSONException {
         String returningValue = "";
         try {
@@ -133,7 +170,7 @@ public static String GetExamTimeTable(String school, String department, String l
                 CreateClassLectureBackup(returningValue);// creating a  backup
                 returningValue = new JSONObject(returningValue).getJSONArray(ARRAY_NAME).length() == 0 ? "" : returningValue;
             } else {
-                String $;
+                String $="";
                 switch (responses.code()) {
                     case 400:
                         $ = "Bad Request";//The request could not be understood by the server due to malformed syntax
@@ -181,7 +218,12 @@ public static String GetExamTimeTable(String school, String department, String l
 
 
     }
-
+/**
+ * <p>
+ *     Will parse the {jsonString} Json-string parameter from the server
+ * </p>
+ * @param jsonString
+ * */
     public void ProcessJson(String jsonString) {
 
         try {
@@ -205,6 +247,8 @@ public static String GetExamTimeTable(String school, String department, String l
     }
 
     private String processStartTime(String time) {
+        //To DO: maybe be removeed if the architect of the app is changed because activity/courses setting options
+
 
         if (time.startsWith("07")) {
             return configs.TIMES_PERIOD_START[0];
@@ -281,7 +325,8 @@ public static String GetExamTimeTable(String school, String department, String l
         }
 
     }
-
+/**
+ * */
     private void writeToDb(String classStartTime, String classEndTime, String classVenue, String classModuleName, int ClassOrdering, String classDay, String ClassType) {
         new CRUD().writeToDb(
                 classDay,
