@@ -243,6 +243,9 @@ public class CRUD {
 
     }
 
+    /**
+    * @param temp1
+    * */
     public static void initWriteExamination(List<ExaminationDB> temp1) { // this list uses the constructor with no week as a parameter
         List<ExaminationDB> temp2 = new ArrayList<>(); //this uses a constructor with week as a parameter
         Collections.sort(temp1, new WeekComparator());
