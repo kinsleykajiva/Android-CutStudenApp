@@ -88,21 +88,21 @@
     <string name="known_Bugs">
     Here is a list of all known possible bugs that users may feel or see as they use the application.\n\n
     These bugs may not be causing any run-time exceptions but they still need correcting.\n\n
-    • When renaming the tabs to from the settings sections it may occure that when a user taps
+    • When renaming the tabs to from the settings sections it may occur that when a user taps
     the renaming option twice in a activity session the renaming code may wipe out the tab titles hence the tabs
     and their content.\n\n
     • This one is for the developer who may want to update the realm data base , do note that when ever you update the data base or library
     version some methods may be rendered old or deprecated so go through the CRUD class found DBAccess package, so this could affect the
     performance of the whole application.\n\n
-    • Also in updating the code do consider redoing the CRUD class found in DBAccess package to pass the Realm object to the
+    • Also in updating the code do consider redoing the CRUD class found in DBAccess package to pass the Realm object to
     the methods in need or in question as i may think that write operations at the moment may be slow than reading operations.\n\n
     • When switching from Class TimeTable to Examinations TimeTable as you would have noticed that the whole applications closes
     and it resets all of the variables this has various advantages.I do hope there will another way of switching and that resets
     several app runtime conditions. As you would switch from these TimeTables one of the two has to be rendered invalid to use
     whilst using the other one.\n\n
     • As of API 25 and below there is no known way of removing app shortcut at the users home screen(Please Note: this is subject to the
-    users Theme that they have at the moment of using the app).So at the moment if users clear the app cache that also cleares the app
-    timetable please do know all prefference or temporary database will be wiped out so ,another short-cut will be  created it may annoy
+    users Theme that they have at the moment of using the app).So at the moment if users clear the app cache that also clears the app
+    timetable please do know all preferences or temporary database will be wiped out so ,another short-cut will be  created it may annoy
     the user so by any means in new API (25 + ) do take care of this.\n
     \n\n
     • Thus All.
