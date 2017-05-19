@@ -78,6 +78,7 @@ dependencies {
 
     compile 'com.github.javiersantos:BottomDialogs:1.2.1'
     compile 'com.github.flipkart-incubator:circular-image:1.0'
+    compile "com.andkulikov:transitionseverywhere:1.7.2"
     /*compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;
     }*/
